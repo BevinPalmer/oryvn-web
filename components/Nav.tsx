@@ -2,11 +2,26 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Nav() {
   const pathname = usePathname();
   const router = useRouter();
   const isDashboard = pathname === "/dashboard";
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
 
   function signOut() {
     if (typeof window !== "undefined") {
@@ -17,16 +32,25 @@ export default function Nav() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-nav-border bg-bg/95 backdrop-blur-sm">
-      <nav className="mx-auto flex h-[52px] max-w-6xl items-center justify-between px-5 md:px-8">
+      {mobileOpen && !isDashboard ? (
+        <button
+          type="button"
+          className="fixed inset-0 top-[52px] z-40 bg-black/50 backdrop-blur-[2px] md:hidden"
+          aria-label="Close menu"
+          onClick={() => setMobileOpen(false)}
+        />
+      ) : null}
+      <nav className="relative z-50 mx-auto flex h-[52px] max-w-6xl items-center justify-between gap-3 px-5 md:px-8">
         <Link
           href="/"
-          className="text-nav font-normal uppercase tracking-[0.18em] text-logo"
+          className="shrink-0 text-nav font-normal uppercase tracking-[0.18em] text-logo"
         >
           ORYVN
         </Link>
-        <div className="flex items-center gap-6 md:gap-8">
-          {!isDashboard && (
-            <>
+
+        {!isDashboard ? (
+          <>
+            <div className="hidden flex-1 items-center justify-end gap-8 md:flex">
               <Link
                 href="/#how-it-works"
                 className="label-caps text-text-muted transition hover:text-text-secondary"
@@ -51,26 +75,96 @@ export default function Nav() {
               >
                 Start free
               </Link>
-            </>
-          )}
-          {isDashboard && (
-            <>
+            </div>
+
+            <div className="flex flex-1 items-center justify-end gap-2.5 md:hidden">
               <Link
-                href="/#pricing"
-                className="label-caps text-text-muted transition hover:text-text-secondary"
+                href="/signup"
+                className="rounded-sm bg-accent px-3 py-2 text-[11px] font-medium uppercase tracking-[0.12em] text-black transition hover:bg-accent-hover sm:px-4 sm:text-label sm:tracking-label"
               >
-                Pricing
+                Start free
               </Link>
               <button
                 type="button"
-                onClick={signOut}
-                className="label-caps text-text-muted transition hover:text-text-secondary"
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-nav-menu"
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                onClick={() => setMobileOpen((o) => !o)}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border text-text-secondary transition hover:border-accent hover:text-text-primary"
               >
-                Sign out
+                {mobileOpen ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path
+                      d="M6 6l12 12M18 6L6 18"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path
+                      d="M4 7h16M4 12h16M4 17h16"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                )}
               </button>
-            </>
-          )}
-        </div>
+            </div>
+
+            <div
+              id="mobile-nav-menu"
+              aria-hidden={!mobileOpen}
+              className={`absolute left-0 right-0 top-full z-50 border-b border-nav-border bg-bg shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition-all duration-300 ease-out md:hidden ${
+                mobileOpen
+                  ? "pointer-events-auto max-h-[min(70vh,420px)] translate-y-0 opacity-100"
+                  : "pointer-events-none max-h-0 -translate-y-1 overflow-hidden border-b-0 opacity-0"
+              }`}
+            >
+              <div className="flex flex-col gap-1 px-5 py-4">
+                <Link
+                  href="/#how-it-works"
+                  className="rounded-md px-3 py-3.5 text-[13px] font-medium uppercase tracking-[0.14em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  How it works
+                </Link>
+                <Link
+                  href="/#pricing"
+                  className="rounded-md px-3 py-3.5 text-[13px] font-medium uppercase tracking-[0.14em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href="/login"
+                  className="rounded-md px-3 py-3.5 text-[13px] font-medium uppercase tracking-[0.14em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Log in
+                </Link>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-1 items-center justify-end gap-6 md:gap-8">
+            <Link
+              href="/#pricing"
+              className="label-caps text-text-muted transition hover:text-text-secondary"
+            >
+              Pricing
+            </Link>
+            <button
+              type="button"
+              onClick={signOut}
+              className="label-caps text-text-muted transition hover:text-text-secondary"
+            >
+              Sign out
+            </button>
+          </div>
+        )}
       </nav>
     </header>
   );

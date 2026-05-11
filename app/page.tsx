@@ -7,6 +7,7 @@ import CapabilitiesSection from "@/components/CapabilitiesSection";
 import ConversationsSection from "@/components/ConversationsSection";
 import PricingSection from "@/components/PricingSection";
 import CtaBanner from "@/components/CtaBanner";
+import FaqSection from "@/components/FaqSection";
 
 export default function HomePage() {
   return (
@@ -21,6 +22,7 @@ export default function HomePage() {
         <PricingSection />
       </div>
       <CtaBanner />
+      <FaqSection />
       <Footer />
     </div>
   );

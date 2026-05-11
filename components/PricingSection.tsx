@@ -1,19 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import BillingToggle, { type BillingPeriod } from "./BillingToggle";
 
-function signupHref(plan: "trial" | "starter" | "pro" | "studio", billing: BillingPeriod) {
+function signupHref(plan: "trial" | "starter" | "pro" | "studio") {
   if (plan === "trial") return "/signup";
-  const b = billing === "yearly" ? "yearly" : "monthly";
-  return `/signup?plan=${plan}&billing=${b}`;
+  return `/signup?plan=${plan}`;
 }
 
 export default function PricingSection() {
-  const [billing, setBilling] = useState<BillingPeriod>("monthly");
-  const isYearly = billing === "yearly";
-
   const tiers = [
     {
       id: "trial" as const,
@@ -29,8 +23,8 @@ export default function PricingSection() {
     {
       id: "starter" as const,
       name: "Artist",
-      price: isYearly ? "$23/mo" : "$29/mo",
-      sub: isYearly ? "billed annually" : "billed monthly",
+      price: "$29/mo",
+      sub: "billed monthly",
       desc: "For solo photographers and retouchers.",
       features: ["All retouching tools", "Layer organization", "Session history"],
       cta: "Get Artist",
@@ -40,8 +34,8 @@ export default function PricingSection() {
     {
       id: "pro" as const,
       name: "Professional",
-      price: isYearly ? "$63/mo" : "$79/mo",
-      sub: isYearly ? "billed annually" : "billed monthly",
+      price: "$79/mo",
+      sub: "billed monthly",
       desc: "For working retouchers with active client work.",
       features: [
         "Everything in Artist",
@@ -56,8 +50,8 @@ export default function PricingSection() {
     {
       id: "studio" as const,
       name: "Studio",
-      price: isYearly ? "$159/mo" : "$199/mo",
-      sub: isYearly ? "billed annually" : "billed monthly",
+      price: "$199/mo",
+      sub: "billed monthly",
       desc: "For production studios.",
       features: [
         "Everything in Pro",
@@ -81,24 +75,22 @@ export default function PricingSection() {
           Less than one hour of a freelance retoucher&apos;s time.
         </p>
 
-        <div className="mt-10 flex justify-center">
-          <BillingToggle value={billing} onChange={setBilling} />
-        </div>
-
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col rounded-lg border bg-surface p-6 text-left ${
+              className={`relative flex h-full flex-col rounded-lg border bg-surface p-4 text-left sm:p-6 ${
                 tier.highlight
-                  ? "border-accent shadow-[0_0_0_1px_rgba(196,116,138,0.45)]"
-                  : "border-border"
+                  ? "border-accent pt-8 shadow-[0_0_0_1px_rgba(196,116,138,0.45)] sm:pt-9"
+                  : "border-border pt-6 sm:pt-6"
               }`}
             >
               {tier.popular ? (
-                <span className="absolute -top-2.5 right-4 rounded-sm bg-accent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-black">
-                  Most popular
-                </span>
+                <div className="pointer-events-none absolute left-3 right-3 top-0 z-10 flex justify-center sm:left-auto sm:right-4 sm:justify-end">
+                  <span className="inline-flex max-w-[min(100%,14rem)] translate-y-[-50%] items-center justify-center rounded-sm bg-accent px-2.5 py-0.5 text-center text-[10px] font-semibold uppercase leading-tight tracking-wider text-black">
+                    Most popular
+                  </span>
+                </div>
               ) : null}
               <p className="label-caps text-text-dim">{tier.name}</p>
               <p className="mt-4 font-headline text-3xl text-text-primary">{tier.price}</p>
@@ -106,7 +98,7 @@ export default function PricingSection() {
               {tier.desc ? (
                 <p className="mt-4 text-[14px] leading-[1.75] text-text-muted">{tier.desc}</p>
               ) : null}
-              <ul className="mt-6 flex flex-col gap-2 text-[13px] leading-relaxed text-text-muted">
+              <ul className="mt-6 flex flex-1 flex-col gap-2 text-[13px] leading-relaxed text-text-muted">
                 {tier.features.map((f) => (
                   <li key={f} className="flex gap-2">
                     <span className="text-accent" aria-hidden>
@@ -117,11 +109,11 @@ export default function PricingSection() {
                 ))}
               </ul>
               <Link
-                href={signupHref(tier.id, billing)}
-                className={`mt-8 inline-block w-full rounded-sm py-2.5 text-center text-[13px] font-medium transition ${
+                href={signupHref(tier.id)}
+                className={`mt-auto inline-block w-full rounded-sm py-2.5 text-center text-[13px] font-medium transition ${
                   tier.highlight
                     ? "bg-accent text-black hover:bg-accent-hover"
-                    : "border border-border2 text-text-secondary hover:border-accent hover:text-text-primary"
+                    : "border border-border bg-transparent text-text-secondary hover:border-accent hover:bg-accent-dim/30 hover:text-text-primary"
                 }`}
               >
                 {tier.cta}

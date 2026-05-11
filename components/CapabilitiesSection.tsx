@@ -41,11 +41,11 @@ export default function CapabilitiesSection() {
           respectful of your file.
         </p>
 
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CAPS.map((c) => (
             <div
               key={c.title}
-              className="border border-[#1e1e1e] bg-surface p-6 sm:p-8 md:p-7"
+              className="border border-[#1e1e1e] bg-surface p-4 sm:p-6 md:p-8"
             >
               <h3 className="font-headline text-lg text-[#d0d0d0]">{c.title}</h3>
               <p className="mt-3 text-[14px] leading-[1.75] text-text-muted">{c.body}</p>
