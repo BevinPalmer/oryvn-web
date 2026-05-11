@@ -119,31 +119,40 @@ export default function Nav() {
               aria-hidden={!mobileOpen}
               className={`absolute left-0 right-0 top-full z-50 border-b border-nav-border bg-bg shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition-all duration-300 ease-out md:hidden ${
                 mobileOpen
-                  ? "pointer-events-auto max-h-[min(70vh,420px)] translate-y-0 opacity-100"
+                  ? "pointer-events-auto max-h-[min(88vh,640px)] translate-y-0 opacity-100"
                   : "pointer-events-none max-h-0 -translate-y-1 overflow-hidden border-b-0 opacity-0"
               }`}
             >
-              <div className="flex flex-col gap-1 px-5 py-4">
+              <div className="flex flex-col items-center px-6 py-10 sm:px-8 sm:py-12">
+                <div className="flex w-full max-w-md flex-col items-center text-center">
+                  <Link
+                    href="/#how-it-works"
+                    className="w-full rounded-md py-5 text-2xl font-medium uppercase tracking-[0.08em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    How it works
+                  </Link>
+                  <Link
+                    href="/#pricing"
+                    className="w-full rounded-md py-5 text-2xl font-medium uppercase tracking-[0.08em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Pricing
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="w-full rounded-md py-5 text-2xl font-medium uppercase tracking-[0.08em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Log in
+                  </Link>
+                </div>
                 <Link
-                  href="/#how-it-works"
-                  className="rounded-md px-3 py-3.5 text-[13px] font-medium uppercase tracking-[0.14em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
+                  href="/signup"
+                  className="mt-6 flex w-full max-w-md items-center justify-center rounded-sm bg-accent px-8 py-3 text-center text-[14px] font-medium leading-snug text-black transition hover:bg-accent-hover"
                   onClick={() => setMobileOpen(false)}
                 >
-                  How it works
-                </Link>
-                <Link
-                  href="/#pricing"
-                  className="rounded-md px-3 py-3.5 text-[13px] font-medium uppercase tracking-[0.14em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Pricing
-                </Link>
-                <Link
-                  href="/login"
-                  className="rounded-md px-3 py-3.5 text-[13px] font-medium uppercase tracking-[0.14em] text-text-secondary transition hover:bg-surface2 hover:text-text-primary"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Log in
+                  Start free — no card required
                 </Link>
               </div>
             </div>
