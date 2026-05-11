@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Deployment
+
+- **Production API URL:** set `NEXT_PUBLIC_API_BASE=https://api.oryvnai.com` on Vercel (marketing site stays on `oryvnai.com`).
+- Full stack steps: [`../docs/ORYVN_DEPLOYMENT.md`](../docs/ORYVN_DEPLOYMENT.md).
+
 ## Getting Started
 
 First, run the development server:

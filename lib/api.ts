@@ -1,5 +1,7 @@
+/** Express API host (apex is the marketing site on Vercel). */
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") ?? "https://oryvnai.com";
+  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") ??
+  "https://api.oryvnai.com";
 
 export async function register(email: string, password: string) {
   const res = await fetch(`${API_BASE}/auth/register`, {
@@ -17,6 +19,20 @@ export async function login(email: string, password: string) {
     body: JSON.stringify({ email, password }),
   });
   return res.json();
+}
+
+/** Called from the web app after plugin OAuth-style login so the UXP panel can pick up the JWT. */
+export async function storePluginToken(sessionId: string, jwt: string) {
+  const res = await fetch(`${API_BASE}/auth/store-plugin-token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ session_id: sessionId, jwt }),
+  });
+  const data = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) {
+    throw new Error(data.error || "Plugin handoff failed");
+  }
+  return data;
 }
 
 export async function getCredits(token: string) {

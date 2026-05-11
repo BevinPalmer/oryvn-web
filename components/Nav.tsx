@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 
 export default function Nav() {
@@ -9,6 +10,11 @@ export default function Nav() {
   const router = useRouter();
   const isDashboard = pathname === "/dashboard";
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [navMounted, setNavMounted] = useState(false);
+
+  useEffect(() => {
+    setNavMounted(true);
+  }, []);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -31,16 +37,20 @@ export default function Nav() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-nav-border bg-bg/95 backdrop-blur-sm">
-      {mobileOpen && !isDashboard ? (
-        <button
-          type="button"
-          className="fixed inset-0 top-[52px] z-40 bg-black/50 backdrop-blur-[2px] md:hidden"
-          aria-label="Close menu"
-          onClick={() => setMobileOpen(false)}
-        />
-      ) : null}
-      <nav className="relative z-50 mx-auto flex h-[52px] max-w-6xl items-center justify-between gap-3 px-5 md:px-8">
+    <>
+      {navMounted && mobileOpen && !isDashboard
+        ? createPortal(
+            <button
+              type="button"
+              className="fixed inset-0 z-[40] bg-black/60 backdrop-blur-sm md:hidden"
+              aria-label="Close menu"
+              onClick={() => setMobileOpen(false)}
+            />,
+            document.body
+          )
+        : null}
+      <header className="sticky top-0 z-50 border-b border-nav-border bg-bg/95 backdrop-blur-sm">
+        <nav className="relative z-50 mx-auto flex h-[52px] max-w-6xl items-center justify-between gap-3 px-5 md:px-8">
         <Link
           href="/"
           className="shrink-0 text-nav font-normal uppercase tracking-[0.18em] text-logo"
@@ -174,7 +184,8 @@ export default function Nav() {
             </button>
           </div>
         )}
-      </nav>
-    </header>
+        </nav>
+      </header>
+    </>
   );
 }
