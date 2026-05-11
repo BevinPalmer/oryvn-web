@@ -11,20 +11,10 @@ export default function Footer() {
 
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between sm:gap-12 md:flex-col md:items-end">
           <div className="flex items-center gap-5">
-            <a
-              href="https://www.instagram.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="label-caps text-text-muted transition hover:text-text-secondary"
-            >
+            <a href="#" className="label-caps text-text-muted transition hover:text-text-secondary">
               Instagram
             </a>
-            <a
-              href="https://twitter.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="label-caps text-text-muted transition hover:text-text-secondary"
-            >
+            <a href="#" className="label-caps text-text-muted transition hover:text-text-secondary">
               X (Twitter)
             </a>
           </div>
