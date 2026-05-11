@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #0c0c0c;
+    --surface: #141414;
+    --surface2: #1a1a1a;
+    --surface3: #202020;
+    --border: #222222;
+    --border2: #2a2a2a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #c0c0c0;
+    --text-muted: #777777;
+    --text-dim: #444444;
+    --text-ghost: #2e2e2e;
+    --accent: #c4748a;
+    --accent-dim: rgba(196, 116, 138, 0.12);
+    --accent-hover: #b5647a;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg font-sans font-normal antialiased;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #777777;
+  }
+
+  .font-headline {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    font-feature-settings: "kern" 1;
+  }
+
+  .label-caps {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #444444;
+  }
+
+  .bubble-user {
+    background: #c4748a;
+    color: #fff;
+    border-radius: 18px 18px 5px 18px;
+  }
+
+  .bubble-oryvn {
+    background: #202020;
+    color: #ccc;
+    border-radius: 18px 18px 18px 5px;
+  }
+
+  @keyframes typing-dot {
+    0%,
+    80%,
+    100% {
+      opacity: 0.25;
+      transform: translateY(0);
+    }
+    40% {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  }
+
+  .typing-dot {
+    animation: typing-dot 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
