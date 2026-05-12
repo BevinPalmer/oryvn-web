@@ -39,7 +39,7 @@ export default function ForgotPasswordPage() {
               Check your email for a reset code.
             </p>
             <p className="mt-4 text-center text-[13px] leading-relaxed text-text-dim">
-              Email delivery is not wired yet — your code is printed in the server logs (e.g. Railway) for testing.
+              If you don&apos;t see it within a minute, check spam — or try again in a few minutes.
             </p>
             <Link
               href={`/reset-password?email=${encodeURIComponent(email.trim())}`}
