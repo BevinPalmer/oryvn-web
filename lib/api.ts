@@ -21,6 +21,26 @@ export async function login(email: string, password: string) {
   return res.json();
 }
 
+export async function forgotPassword(email: string) {
+  const res = await fetch(`${API_BASE}/auth/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, ...data };
+}
+
+export async function resetPassword(email: string, code: string, newPassword: string) {
+  const res = await fetch(`${API_BASE}/auth/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, code, newPassword }),
+  });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, ...data };
+}
+
 /** Called from the web app after plugin OAuth-style login so the UXP panel can pick up the JWT. */
 export async function storePluginToken(sessionId: string, jwt: string) {
   const res = await fetch(`${API_BASE}/auth/store-plugin-token`, {

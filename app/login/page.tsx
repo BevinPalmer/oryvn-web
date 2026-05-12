@@ -27,6 +27,7 @@ function LoginForm() {
 
   const pluginSource = searchParams.get("source") === "plugin";
   const pluginSessionId = searchParams.get("session_id")?.trim() ?? "";
+  const resetOk = searchParams.get("reset") === "1";
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -90,6 +91,14 @@ function LoginForm() {
           After you sign in, we&apos;ll send your session back to the Photoshop plugin.
         </p>
       ) : null}
+      {resetOk ? (
+        <p
+          className="mt-4 rounded-md border border-ok/30 bg-ok/10 px-3 py-2.5 text-center text-[13px] text-ok"
+          role="status"
+        >
+          Password updated. Sign in with your new password.
+        </p>
+      ) : null}
       <form className="mt-10 space-y-4" onSubmit={onSubmit}>
         <div>
           <label htmlFor="email" className="label-caps">
@@ -122,6 +131,14 @@ function LoginForm() {
             className="mt-2 w-full rounded-md border border-border2 bg-surface2 px-3 py-2.5 text-[14px] text-text-primary outline-none transition placeholder:text-text-dim focus:border-accent focus:ring-1 focus:ring-accent"
             placeholder="••••••••"
           />
+          <div className="mt-2 text-right">
+            <Link
+              href="/forgot-password"
+              className="text-[13px] text-text-muted underline-offset-4 transition hover:text-accent hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
         </div>
         {error ? (
           <p className="text-[13px] text-red-400/90" role="alert">
